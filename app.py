@@ -5,13 +5,14 @@ import pandas as pd
 import flasgger
 from flasgger import Swagger
 
-app = Flask(__name__)
+app=Flask(__name__)
 Swagger(app)
 
 pickle_in = open("logreg.pkl","rb")
-model = pickle.load(pickle_in)
+model=pickle.load(pickle_in)
 
-@app.route('/predict', methods=["Get"])
+
+@app.route('/predict',methods=["Get"])
 def predict_class():
     
     """Predict if Customer would buy the product or not .
@@ -38,12 +39,11 @@ def predict_class():
     age = int(request.args.get("age"))
     new_user = int(request.args.get("new_user"))
     total_pages_visited = int(request.args.get("total_pages_visited"))
-    prediction = model.predict([[age, new_user, total_pages_visited]])
+    prediction = model.predict([[age,new_user,total_pages_visited]])
     print(prediction[0])
     return "Model prediction is" + str(prediction)
 
-
-@app.route('/predict_file', methods=["POST"])
+@app.route('/predict_file',methods=["POST"])
 def prediction_test_file():
     """Prediction on multiple input test file .
     ---
